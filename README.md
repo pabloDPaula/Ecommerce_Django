@@ -24,6 +24,6 @@ Banco de dados: mysql do xampp
 
 # Admin do Django
 
-Para acessar o admin do django abara essa url " http://127.0.0.1:8000/admin/ " 
+Para acessar o admin do django abara essa url "http://127.0.0.1:8000/admin/" 
 usuario: pablo
 senha: 123456
