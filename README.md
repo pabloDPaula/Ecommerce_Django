@@ -3,7 +3,7 @@ Descrição: Site ecommerce usando django
 
 Frameworks: Django e Bootstrap
 
-Linguagens: html, css, javascript, python
+Linguagens: HTML, CSS, Javascript, Python
 
 Banco de dados: mysql do xampp
 
