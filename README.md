@@ -22,7 +22,7 @@ Banco de dados: mysql do xampp
 
 4 - Instale o XAMPP em seu computador e inicie o Apache e o MySQL
 
-# Usuario e senha do ADMIN DO DJANGO	
+# Admin do Django
 
 Para acessar o admin do django abara essa url " http://127.0.0.1:8000/admin/ " 
 usuario: pablo
