@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load filters %}
+
+{% block titulo %}{{ produto.nome }}{% endblock %}
+
+{% block conteudo %}
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="row">
+            <div class="col-lg-12 mt-4">
+                <h1 class="h2">{{ produto.nome }}</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 mt-4">
+                {% if produto.imagem %}
+                <img class="img-fluid" src="{{ produto.imagem.url }}" style="">
+                {% endif %}
+            </div>
+            <div class="col-lg-6">
+                <div class="container product-price-block">
+                    {% if produto.desconto != 0 %}
+                    <span id="variation-preco" class="lead product-old-price text-muted">
+                                    {{ produto.preco_marketing|formata_preco }}
+                     </span>
+                    <h4 id="variation-preco-promocional" class="product-price lead"
+                        style="font-size: 3.0rem;">
+                        {{ produto.preco_marketing_promocional|formata_preco }}
+                    </h4>
+                    <p style="font-size: 1.0rem;">Desconto: <span style="color:green; font-weight: bold;" id="desconto">{{ produto.desconto }}% OFF</span>
+                    </p>
+                    {% else %}
+                    <span id="variation-preco" class="product-price lead" style="font-size: 3.0rem;">
+                                    {{ produto.preco_marketing|formata_preco }}
+                     </span>
+                    {% endif %}
+                    {% if produto.desconto %}
+                    <p style="font-size: 1.2rem; margin: 0;">Em 1x no cartão com até <strong>{{ produto.desconto }}%
+                        OFF</strong></p>
+                    {% endif %}
+                    <p><a href="" style="font-size: 1.0rem; color: grey;">Ver mais opções de pagamento</a></p>
+
+                </div>
+                <div class="form-comprar">
+                    <form action="{% url 'adicionarAoCarinho' %}" id="form-add-to-cart">
+                        <div class="form-group">
+                            {% if produto.tipo == 'V' %}
+                                <select id="select-variacoes" name="vid" class="form-control form-control-lg">
+                                    {% for variacao in produto.variacao_set.all %}
+                                        {% if variacao.desconto != 0%}
+                                        <option data-preco="{{ variacao.preco|formata_preco }}"
+                                                data-preco-promocional="{{ variacao.preco_promocional|formata_preco }}"
+                                                data-desconto="{{ variacao.desconto }}"
+                                                value="{{ variacao.id }}">
+                                            {% if variacao.nome %}
+                                            {{ variacao.nome }}
+                                            {% else %}
+                                            {{ variacao }}
+                                            {% endif %}
+                                        </option>
+                                        {% else %}
+                                        <option data-preco="{{ variacao.preco|formata_preco }}"
+                                                value="{{ variacao.id }}">
+                                            {% if variacao.nome %}
+                                            {{ variacao.nome }}
+                                            {% else %}
+                                            {{ variacao }}
+                                            {% endif %}
+                                        </option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            {% else %}
+                                {% for variacao in produto.variacao_set.all %}
+                                        <input type="hidden" value="{{ variacao.id }}" name="vid">
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                        <div class="text-left">
+                            <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                                Comprar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="mt-5 mb-5">
+            <h2 class="mb-4">Descrição do Produto</h2>
+            {{ produto.descricao|safe }}
+            <h2 class="mt-5 mb-5">Informações técnicas</h2>
+            {{ produto.informacao_tecnica|safe }}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

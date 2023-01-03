@@ -1,0 +1,110 @@
+{% load filters %}
+<nav class="navbar navbar-dark bg-primary navbar-expand-lg">
+    <a class="navbar-brand" href="{% url 'listaProdutos' %}">E-commerce</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+
+    <form class="form-inline my-2 my-lg-0" action="{% url 'busca' %}">
+        <input class="form-control" value="{{ request.GET.palavra }}" name="palavra" type="search"
+               placeholder="Search" aria-label="Search" style="width: 500px;">
+        <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+        </button>
+    </form>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'listaProdutos' %}">Inicio <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="" id="navbarDropdown1" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Categoria
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                    <li>
+                        <a class="dropdown-item" href="{% url 'listaProdutos_categoria' 'smartphone' %}">Smartphones
+                           <i class="fa-solid fa-angle-right"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li><a class="dropdown-item" href="{% url 'listaProdutos_subcategoria' 'smartphone' 'Acessorio'%}">Acessório para celular</a></li>
+                            <li><a class="dropdown-item" href="{% url 'listaProdutos_subcategoria' 'smartphone' 'Asus'%}">Asus</a></li>
+                            <li><a class="dropdown-item" href="{% url 'listaProdutos_subcategoria' 'smartphone' 'Samsung'%}">Samsung</a></li>
+                            <li><a class="dropdown-item" href="{% url 'listaProdutos_subcategoria' 'smartphone' 'iPhone'%}">iPhone</a></li>
+                            <li><a class="dropdown-item" href="{% url 'listaProdutos_subcategoria' 'smartphone' 'LG'%}">LG</a></li>
+                            <li><a class="dropdown-item" href="{% url 'listaProdutos_subcategoria' 'smartphone' 'Motorola'%}">Motorola</a></li>
+                            <li><a class="dropdown-item" href="{% url 'listaProdutos_subcategoria' 'smartphone' 'Xiaomi'%}">Xiaomi</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'listaProdutos_categoria' 'hardware'%}">Hardware
+                            <i class="fa-solid fa-angle-right"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li><a class="dropdown-item" href="#">Collers</a></li>
+                            <li><a class="dropdown-item" href="#">HD</a></li>
+                            <li><a class="dropdown-item" href="#">SSD</a></li>
+                            <li><a class="dropdown-item" href="#">Fonte</a></li>
+                            <li><a class="dropdown-item" href="#">Processador</a></li>
+                            <li><a class="dropdown-item" href="#">memória RAM</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="{% url 'listaProdutos_categoria' 'periferico'%}">Periféricos
+                            <i class="fa-solid fa-angle-right"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-submenu">
+                            <li><a class="dropdown-item" href="#">Caixa de som</a></li>
+                            <li><a class="dropdown-item" href="#">Headset</a></li>
+                            <li><a class="dropdown-item" href="#">Mouse</a></li>
+                            <li><a class="dropdown-item" href="#">Teclado</a></li>
+                            <li><a class="dropdown-item" href="#">Mouse pad</a></li>
+                            <li><a class="dropdown-item" href="#">Webcam</a></li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="" id="navbarDropdown3" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa-solid fa-user"></i> Conta
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown3">
+                    <a class="dropdown-item" href="{% url 'atualizar' %}">Atualizar</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'logout' %}">Deslogar</a>
+                </div>
+            </li>
+            {% else %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Entrar</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'criar' %}">Criar conta</a>
+            </li>
+            {% endif %}
+
+            {% if request.session.carrinho %}
+            <li class="nav-item">
+                <a class="nav-link nav-cart-link active" href="{% url 'carrinho'  %}">
+                    <span class="nav-cart-text mr-1">
+                        Carrinho
+                    </span>
+                    <span class="nav-cart-count mr-1">
+                        <strong>{{ request.session.carrinho|carrinho_quantidade_total }}x</strong>
+                    </span>
+                    <span class="nav-cart-icon mr-2">
+                        <i class="fas fa-shopping-cart"></i>
+                    </span>
+                </a>
+            </li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>

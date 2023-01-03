@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load filters %}
+
+{% block titulo %}Inicio{% endblock %}
+
+{% block conteudo %}
+
+<style>
+#card-top{
+    margin-left: 20px;
+    margin-top: 5px;
+    height: 25px;
+}
+
+#card-top-desconto{
+    border-radius: 15px 50px;
+    max-width: 57px;
+    text-align: center;
+    height: 25px;
+    background-color: #0BC73D;
+}
+
+p{
+    font-size: 13px;
+    color: white;
+    font-weight: bold;
+}
+
+.card-title{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    overflow: hidden;
+}
+
+</style>
+
+<div class="row">
+    {% block cabecalho %} {% endblock %}
+    <div class="col-lg-12">
+        <div class="card-columns">
+            {% for produto in produtos %}
+            <div class="card" style="width: 16rem;">
+                <div class="row" id="card-top">
+                    {% if produto.desconto %}
+                    <div class="row" id="card-top-desconto">
+                        <div class="col-lg">
+                            <p>{{ produto.desconto }}%</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                {% if produto.imagem %}
+                <a href="{% url 'detalheProdutos' produto.slug %}">
+                    <img class="card-img-top" src="{{ produto.imagem.url }}" alt="{{ produto.nome }}"
+                         style="max-width: 70%; margin-left: 40px; ">
+                </a>
+                {% endif %}
+                <div class="card-body">
+                    <h2 class="card-title" style="font-size:0.85rem; font-weight: bold;">{{ produto.nome }}</h2>
+                    {% if produto.desconto == 0 %}
+                    <div class="container product-price-block">
+                        <span class="product-price" style="font-size:1.2rem; font-weight: bold;">
+                            {{ produto.preco_marketing_promocional|formata_preco }}
+                        </span>
+                    </div>
+                    {% else %}
+                    <div class="container product-price-block">
+                         <span class="product-old-price text-muted" style="font-size:0.85rem; font-weight: bold;">
+                            {{ produto.preco_marketing|formata_preco }}
+                        </span>
+                        <br>
+                        <span class="product-price" style="font-size:1.3rem; font-weight: bold;">
+                            {{ produto.preco_marketing_promocional|formata_preco }}
+                        </span>
+                    </div>
+                    {% endif %}
+                    <a href="{% url 'detalheProdutos' produto.slug %}" class="btn btn-primary btn-sm m-1 btn-block">
+                        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                        Comprar
+                    </a>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col">
+        {% include 'parciais/_pagination.html' %}
+    </div>
+</div>
+{% endblock %}

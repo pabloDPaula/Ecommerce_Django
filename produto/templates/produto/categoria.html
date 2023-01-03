@@ -1,0 +1,9 @@
+{% extends 'produto/lista.html' %}
+
+{% block titulo %} {{ view.kwargs.categoria|title }} {% endblock %}
+
+{% block cabecalho %}
+<div class="row mb-4">
+    <h3>{{ view.kwargs.categoria|title }}</h3>
+</div>
+{% endblock %}
