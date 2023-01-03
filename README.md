@@ -26,7 +26,7 @@ Necessário ter o python instalado!!!!
 
 4 - Instale o XAMPP em seu computador e inicie o Apache e o MySQL
 
-5 - Clique em admin do modulo mysql do XAMPP
+5 - Clique em admin do modulo mysql do XAMPP para abrir o phpmyadmin 
 
 6 - Crie um banco de dados com o nome "ecommerce_django" 
 
